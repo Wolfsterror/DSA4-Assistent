@@ -28,9 +28,6 @@ class character {
 		"Social" => "csocial",
 		"Story" => "cstory"
 	);
-	public static function INFOID() {
-		return self::$infoid;
-	}
 
 	const Sex_Male = 1;
 	const Sex_Female = 2;
