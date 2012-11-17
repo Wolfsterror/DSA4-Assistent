@@ -9,13 +9,13 @@
 
 class mysql {
 
-	var $host = "localhost";
-	var $user = "root";
-	var $password = "";
-	var $database = "dsa4assistant";
-	var $prefix = "";
+	private $host = "localhost";
+	private $user = "root";
+	private $password = "";
+	private $database = "dsa4assistant";
+	private $prefix = "";
 
-	var $connection;
+	private $connection;
 
 	/**
 	 * Constructor of the mysql object. Connects to database host and selects database
@@ -43,12 +43,16 @@ class mysql {
 	public function query( $query, $return = false ) {
 		$result = mysql_query( $query, $this->connection );
 		if( $return ) {
-			$res = array();
-			while( $row = mysql_fetch_array( $result ) ) {
-				array_push( $res, $row );
-			}
+			if( $result ) {
+				$res = array();
+				while( $row = mysql_fetch_array( $result ) ) {
+					array_push( $res, $row );
+				}
 
-			return $res;
+				return $res;
+			} else {
+				return false;
+			}
 		} else {
 			if( $result ) return true;
 			else return false;
