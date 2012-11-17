@@ -61,6 +61,79 @@ class user {
 		return array();
 	}
 
+	/**
+	 * Get all user information by a character id
+	 *
+	 * @param cid int Character id
+	 * @return array Array that includes all user information. Empty array if no user was found.
+	 */
+	public function getUserByCharacterId( $cid ) {
+		foreach( $this->users as $user ) {
+			$res = $this->mysql->query( "SELECT * FROM `" . $this->mysql->prefix() . "character` WHERE `cid` = " . intval( $cid ), true );
+			if( count( $res ) > 0 ) {
+				return $this->getUserById( $res[0]["uid"] );
+			}
+			/*$character = $this->getCharacterByUserId( $user["uid"] );
+			foreach( $character as $char ) {
+				if( $char->getInfo( character::ID ) == $cid ) {
+					return $user;
+				}
+			}*/
+		}
+
+		return array();
+	}
+
+	/**
+	 * Get all characters by a user id
+	 *
+	 * @param uid int User id
+	 * @return array Array that includes all characters. Empty array if no character were found.
+	 */
+	public function getCharacterByUserId( $uid ) {
+		$user = $this->getUserById( $uid );
+
+		if( !isset( $user["character"] ) ) {
+			$result = $this->mysql->query( "SELECT * FROM `" . $this->mysql->prefix() . "character` WHERE `uid` = " . intval( $user["uid"] ), true );
+			$user["character"] = array();
+			foreach( $result as $row ) {
+				array_push( $user["character"], new character( $row ) );
+			}
+		}
+
+		return $user["character"];
+	}
+
+	/**
+	 * Creates a new character for a user
+	 *
+	 * @param uid int User id
+	 * @param cname string Character name
+	 * @param infos optional array Additional infos for the character
+	 * @return boolean Returns false on error and true on success
+	 */
+	public function ceateCharacterForUserId( $uid, $cname, $infos = array() ) {
+		$usr = $this->getUserById( $uid );
+		if( count( $usr ) > 0 ) {
+			if( empty( $cname ) )
+				return false;
+
+			if( !is_array( $infos ) )
+				return false;
+
+			$res = $this->mysql->query( "SELECT * FROM `" . $this->mysql->prefix() . "character` WHERE `cname` = '" . mysql_real_escape_string( $cname ) . '"', true );
+			if( count( $res ) > 0 )
+				return false;
+
+			$infos["uid"] = $uid;
+			$infos["cname"] = $cname;
+
+			$c = new character( $infos );
+			return $c->save( $this->mysql );
+		} else {
+			return false;
+		}
+	}
 
 	/**
 	 * Function to authenticate a user by its user name and password
@@ -82,7 +155,6 @@ class user {
 		}
 	}
 
-
 	/**
 	 * Creates a new user
 	 *
@@ -91,6 +163,9 @@ class user {
 	 * @return boolean Returns false on error like the user already exists and returns true on success.
 	 */
 	public function newUser( $uname, $password ) {
+		if( empty( $uname ) || empty( $password ) )
+			return false;
+
 		$usr = $this->getUserByName( $uname );
 		if( isset( $usr["uid"] ) ) {
 			return false;
