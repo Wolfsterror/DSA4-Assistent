@@ -1,4 +1,11 @@
 <?php
+/**
+ * MySQL object for easy query execution
+ * 
+ * @author		Pascal Pohl
+ * @version		1.0
+ * @since		2012-11-17
+ */
 
 class mysql {
 
@@ -13,7 +20,7 @@ class mysql {
 	/**
 	 * Constructor of the mysql object. Connects to database host and selects database
 	 *
-	 * @return	void
+	 * @return 	void
 	 */
 	function __construct() {
 		$this->connection = mysql_connect( $this->host, $this->user, $this->password );
@@ -29,9 +36,9 @@ class mysql {
 	/**
 	 * Executes sql query and returns data array if wanted
 	 *
-	 * @param	string				Query to be executed
-	 * @param	optional boolean	Data return request
-	 * @return	mixed				Returns array if data requested else returns boolean
+	 * @param query 	string				Query to be executed
+	 * @param return 	optional boolean	Data return request
+	 * @return			mixed				Returns array if data requested else returns boolean
 	 */
 	public function query( $query, $return = false ) {
 		$result = mysql_query( $query, $this->connection );
@@ -52,13 +59,18 @@ class mysql {
 	/**
 	 * Returns table prefix
 	 *
-	 * @return string	Table prefix
+	 * @return 	string	Table prefix
 	 */
 	public function prefix() {
 		return $this->prefix;
 	}
 
 
+	/**
+	 * Destructor of the mysql object. Closes database connection.
+	 *
+	 * @return 	void
+	 */
 	function __destruct() {
 		mysql_close( $this->connection );
 	}
