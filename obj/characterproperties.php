@@ -12,31 +12,19 @@ class characterproperties {
 
 	private $charproperties = array() ;
 	
-	const INFOID = array (
-		"Courage" => "courage" ;
-		"Intelligence" => "intelligence" ;
-		"Intuition" => "intuition" ;
-		"Charisam" => "charisma" ;
-		"Dexterity" => "dexterity" ;
-		"Agility" => "agility" ;
-		"Constitution" => "constitution" ;
-		"Strenght" => "strength" ;
+	public static $infoid = array (
+		"Courage" => "courage" 
+		"Intelligence" => "intelligence" 
+		"Intuition" => "intuition" 
+		"Charisam" => "charisma" 
+		"Dexterity" => "dexterity" 
+		"Agility" => "agility" 
+		"Constitution" => "constitution" 
+		"Strenght" => "strength" 
 	);
 	
 	private $charproperties_mod = array() ;
-	
-	const INFOID = array (
-		"Courage" => "courage" ;
-		"Intelligence" => "intelligence" ;
-		"Intuition" => "intuition" ;
-		"Charisam" => "charisma" ;
-		"Dexterity" => "dexterity" ;
-		"Agility" => "agility" ;
-		"Constitution" => "constitution" ;
-		"Strenght" => "strength" ;
-	);
-
-	
+		
 	const PROP_START = 1 ;
 	const PROP_MOD = 2 ;
 	const PROP_CURRENT = 3 ;
@@ -49,9 +37,9 @@ class characterproperties {
 * @return		void
 */
 	
-	function __construct ( $charproperties ; $charproperties_mod ) {
+	function __construct ( $charproperties , $charproperties_mod ) {
 		$this->charproperties = $charpropertiesarray ;
-		&this->charproperties = $charproperties_modarray ;
+		$this->charproperties = $charproperties_modarray ;
 	 }
 	 
 /**
@@ -69,7 +57,6 @@ class characterproperties {
 			return $this->characterproperties_mod[ $infoid ];
 		} else if ( $flag == characterproperties::PROP_CURRENT )
 			return $this->characterproperties[ $infoid ]+$this->characterproperties_mod[$infoid];
-		return $this->characterproperties[ $infoid ];
 	}
-	 
+} 
 	 
