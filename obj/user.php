@@ -2,9 +2,9 @@
 /**
  * User object gives you functions for managing all user
  *
- * @author		Pascal Pohl
- * @version		1.0
- * @since		2012-11-17
+ * @author  Pascal Pohl
+ * @version 1.0
+ * @since   2012-11-17
  */
 class user {
 
@@ -18,7 +18,8 @@ class user {
 	/**
 	 * Constructor of the user object. Gets all userinfomations and saves them local.
 	 *
-	 * @return 	void
+	 * @param mysql $mysql MySQL object for database access
+	 * @return void
 	 */
 	function __construct( $mysql ) {
 		$this->mysql = $mysql;
@@ -31,7 +32,7 @@ class user {
 	/**
 	 * Searches a user by its unique id and returns all user information
 	 *
-	 * @param uid int User id
+	 * @param int $uid User id
 	 * @return array Array that includes all user information. Empty array if no user was found.
 	 */
 	public function getUserById( $uid ) {
@@ -48,7 +49,7 @@ class user {
 	 * Searches a user by its (normaly) unique name and returns all user information.
 	 * If the user name exists more than once only the first found is returned.
 	 *
-	 * @param uname string User name
+	 * @param string $uname User name
 	 * @return array Array that includes all user information. Empty array if no user was found.
 	 */
 	public function getUserByName( $uname ) {
@@ -64,7 +65,7 @@ class user {
 	/**
 	 * Get all user information by a character id
 	 *
-	 * @param cid int Character id
+	 * @param int $cid Character id
 	 * @return array Array that includes all user information. Empty array if no user was found.
 	 */
 	public function getUserByCharacterId( $cid ) {
@@ -87,7 +88,7 @@ class user {
 	/**
 	 * Get all characters by a user id
 	 *
-	 * @param uid int User id
+	 * @param int $uid User id
 	 * @return array Array that includes all characters. Empty array if no character were found.
 	 */
 	public function getCharacterByUserId( $uid ) {
@@ -107,9 +108,9 @@ class user {
 	/**
 	 * Creates a new character for a user
 	 *
-	 * @param uid int User id
-	 * @param cname string Character name
-	 * @param infos optional array Additional infos for the character
+	 * @param int $uid User id
+	 * @param string $cname Character name
+	 * @param array $infos Additional infos for the character
 	 * @return boolean Returns false on error and true on success
 	 */
 	public function ceateCharacterForUserId( $uid, $cname, $infos = array() ) {
@@ -138,8 +139,8 @@ class user {
 	/**
 	 * Function to authenticate a user by its user name and password
 	 *
-	 * @param uname string User name
-	 * @param password string Password of the user
+	 * @param string $uname User name
+	 * @param string $password Uncrypted password of the user
 	 * @return int Returns an error code. Can be user::AUTH_SUCCESS, user::AUTH_PASSWORD_WRONG or user::AUTH_USER_UNKNOWN
 	 */
 	public function authUser( $uname, $password ) {
@@ -158,8 +159,8 @@ class user {
 	/**
 	 * Creates a new user
 	 *
-	 * @param uname string User name
-	 * @param password string Password of the user
+	 * @param string $uname User name
+	 * @param string $password Uncrypted password of the user
 	 * @return boolean Returns false on error like the user already exists and returns true on success.
 	 */
 	public function newUser( $uname, $password ) {

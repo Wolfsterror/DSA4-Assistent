@@ -2,9 +2,9 @@
 /**
  * Character object gives you functions for managing a character
  *
- * @author		Pascal Pohl
- * @version		0.5
- * @since		2012-11-17
+ * @author  Pascal Pohl
+ * @version 0.5
+ * @since   2012-11-17
  */
 class character {
 
@@ -36,7 +36,7 @@ class character {
 	/**
 	 * Constructor of the character object. All informations are given as array in the constructor
 	 *
-	 * @param charinformationarray array All informations about the character.
+	 * @param array $charinformationarray All informations about the character.
 	 * @return void
 	 */
 	function __construct( $charinformationarray ) {
@@ -46,8 +46,8 @@ class character {
 	/**
 	 * Gets an info by its ID. All IDs are defined in the character::INFOID array.
 	 *
-	 * @param infoid string Info ID
-	 * @return mixed Returns the info by the given ID. Returns false if info is not defined.
+	 * @param string $infoid Info ID
+	 * @return string|int Returns the info by the given ID. Returns false if info is not defined.
 	 */
 	public function getInfo( $infoid ) {
 		if( !isset( $this->charinformations[ $infoid ] ) )
@@ -58,9 +58,9 @@ class character {
 	/**
 	 * Sets an info by its info id and optional saves it in the database.
 	 *
-	 * @param infoid string Info ID
-	 * @param info string The info
-	 * @param save optional mysql MySQL object to use to save.
+	 * @param string $infoid Info ID
+	 * @param string|int $info The info
+	 * @param mysql|boolean $save MySQL object to use to save.
 	 * @return void
 	 */
 	public function setInfo( $infoid, $info, $save = false ) {
@@ -75,7 +75,7 @@ class character {
 	/**
 	 * Saves the character in the database. If character doesn't exists it gets created.
 	 *
-	 * @param mysql mysql MySQL object that is used to save
+	 * @param mysql $mysql MySQL object that is used to save
 	 * @return boolean Returns false on error or true on success
 	 */
 	public function save( $mysql ) {
