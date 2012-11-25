@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title><?php echo $pagetitle; ?></title>
+		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700,400italic,700italic" />
+		<link rel="stylesheet" type="text/css" href="tpl/css/icomoon.css" />
+		<link rel="stylesheet" type="text/css" href="tpl/css/default.css" />
+		<!--[if lte IE 7]><script src="tpl/css/lte-ie7.js"></script><![endif]-->
+	</head>
+	<body>
+		<header>
+			<h2><?php echo $pagetitle; ?></h2>
+		</header>
+		<nav>
+			<ul>
+				<!-- Left menu -->
+				<li><a href="index.php?c=0"><span aria-hidden="true" class="icon-home"></span> Start</a></li>
+				<li><a href="index.php?c=1"><span aria-hidden="true" class="icon-user"></span> Benutzer</a></li>
+				<li><a href="#"><span aria-hidden="true" class="icon-clipboard"></span> Charaktere</a></li>
+				<!-- Right menu -->
+				<li class="right"><span aria-hidden="true" class="icon-enter"></span> <a href="#">Login</a></li>
+				<li class="right"><span aria-hidden="true" class="icon-key"></span> <a href="#">Registrieren</a></li>
+			</ul>
+		</nav>
+		<section id="content">

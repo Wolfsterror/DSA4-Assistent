@@ -1,0 +1,143 @@
+/**
+ * Default CSS document for DSA4-Assistant
+ */
+
+
+/**
+ * COLORS
+ */
+
+body {
+	background-color: #f3dfbc;
+	background-image: url( ../res/tex_body.png );
+	color: #5b3e14;
+}
+
+body > header {
+	background-color: #d1a679;
+	background-image: url( ../res/tex.png );
+}
+
+body > header > h2 {
+	color: #FFFFFF;
+	text-shadow: #000000 0px 0px 10px;
+}
+
+body > nav {
+	background-color: #f3dfbc;
+}
+
+body > nav li:hover {
+	background-color: #ddbd96;
+	text-shadow: #FFFFFF 0px 0px 3px;
+}
+
+body > nav a {
+	color: #5b3e14;
+}
+
+body > section#content {
+	background-color: #f3dfbc;
+}
+
+body > footer {
+	background-color: #d1a679;
+	background-image: url( ../res/tex.png );
+	text-shadow: #FFFFFF 0px 0px 3px;
+}
+
+body > footer > a {
+	color: #5b3e14;
+}
+
+/**
+ * TYPOGRAPHIE
+ */
+
+body {
+	font-family: 'PT Serif', serif;
+	font-size: 13px;
+}
+
+body > header > h2 {
+	font-size: 32px;
+	text-align: center;
+}
+
+body > footer {
+	font-size: 10px;
+	font-family: Verdana, sans-serif;
+	text-align: center;
+}
+
+body > nav a {
+	text-decoration: none;
+}
+
+/**
+ * LAYOUT
+ */
+
+body {
+	width: 900px;
+	margin: auto;
+	border-left: 2px solid #5b3e14;
+	border-right: 2px solid #5b3e14;
+}
+
+header > h2 {
+	margin: 0px;
+	padding: 20px;
+	border-bottom: 3px solid #b49b73;
+}
+
+body > nav {
+	border-bottom: 3px solid #b49b73;
+}
+
+body > nav > ul {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+	height: 31px;
+}
+
+body > nav li {
+	float: left;
+	display: block;
+	padding-left: 10px;
+	padding-right: 10px;
+	line-height: 30px;
+}
+
+body > nav > ul > li.right {
+	float: right;
+}
+
+section {
+	clear: both;
+}
+
+section#content {
+	width: 90%;
+	margin: auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+section#content header > h1 {
+	margin: 0px;
+	padding: 0px;
+	text-indent: 20px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid #b49b73;
+	margin-bottom: 5px;
+}
+
+body > footer {
+	border-top: 3px solid #b49b73;
+	border-bottom: 2px solid #5b3e14;
+	padding: 5px;
+	margin-bottom: 50px;
+	box-shadow: rgba( 0, 0, 0, 0.25 ) 0 5px 5px;
+}

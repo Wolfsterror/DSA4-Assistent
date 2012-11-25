@@ -1,0 +1,61 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('../res/fonts/icomoon.eot');
+	src:url('../res/fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('../res/fonts/icomoon.svg#icomoon') format('svg'),
+		url('../res/fonts/icomoon.woff') format('woff'),
+		url('../res/fonts/icomoon.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'icomoon';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+[class^="icon-"]:before, [class*=" icon-"]:before {
+	font-family: 'icomoon';
+	font-style: normal;
+	speak: none;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
+}
+.icon-home:before {
+	content: "\e000";
+}
+.icon-pencil:before {
+	content: "\e006";
+}
+.icon-user:before {
+	content: "\e037";
+}
+.icon-key:before {
+	content: "\e03f";
+}
+.icon-equalizer:before {
+	content: "\e04e";
+}
+.icon-remove:before {
+	content: "\e05e";
+}
+.icon-enter:before {
+	content: "\e098";
+}
+.icon-exit:before {
+	content: "\e099";
+}
+.icon-mail:before {
+	content: "\e015";
+}
+.icon-calendar:before {
+	content: "\e01b";
+}
+.icon-clipboard:before {
+	content: "\e072";
+}
