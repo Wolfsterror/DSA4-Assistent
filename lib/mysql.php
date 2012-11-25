@@ -68,6 +68,14 @@ class mysql {
 		return $this->prefix;
 	}
 
+	/**
+	 * Returns last inserted index id
+	 *
+	 * @return int
+	 */
+	public function getLastInsertId(){
+		return mysql_insert_id( $this->connection );
+	}
 
 	/**
 	 * Destructor of the mysql object. Closes database connection.
