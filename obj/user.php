@@ -8,6 +8,7 @@
  */
 class user {
 		
+	private $users;
 	private $uid;
 	private $uname;
 	private $upermissions;
@@ -18,17 +19,25 @@ class user {
 	/**
 	 * Constructor of the user object.
 	 *
+	 * @param users $users users object that created the user
 	 * @param int $uid UserID (-1 if new user)
 	 * @param string $uname Name of the User
 	 * @param string $upermissions String of the permissions (until we have permission object)
 	 * @param string $password Crypted password
 	 * @return void
 	 */
-	function __construct( $uid, $uname, $upermissions, $password ) {
+	function __construct( $users, $uid, $uname, $upermissions, $password ) {
+		$this->users = $users;
+
 		$this->uid = intval( $uid );
 		$this->uname = $uname;
 		$this->upermissions = $upermissions;
 		$this->password = $password;
+
+		$u = $this->users->getUserByName( $uname );
+		if( $u != null && $u->getUID() != $this->uid ) {
+			throw new Exception( "Username already exists." );
+		}
 	}
 
 	/**
@@ -75,6 +84,10 @@ class user {
 	 */
 	public function setName( $uname ) {
 		if( !empty( $uname ) ) {
+			$u = $this->users->getUserByName( $uname );
+			if( $u != null && $u->getUID() != $this->uid ) {
+				return false;
+			}
 			$this->uname = $uname;
 			return true;
 		} else {
@@ -107,7 +120,7 @@ class user {
 			return array();
 
 		if( !isset( $this->character ) || !is_array( $this->character ) || $this->character == null ) {
-			$result = users::$mysql->query( "SELECT * FROM `" . users::$mysql->prefix() . "character` WHERE `uid` = " . $this->uid, true );
+			$result = $this->users->mysql->query( "SELECT * FROM `" . $this->users->mysql->prefix() . "character` WHERE `uid` = " . $this->uid, true );
 			$this->character = array();
 			foreach( $result as $row ) {
 				array_push( $this->character, new character( $row ) );

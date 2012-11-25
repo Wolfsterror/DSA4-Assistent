@@ -9,7 +9,7 @@
 class users {
 
 	private $users = array();
-	public static $mysql;
+	public $mysql;
 
 	const AUTH_USER_UNKNOWN = 1;
 	const AUTH_PASSWORD_WRONG = 2;
@@ -22,12 +22,14 @@ class users {
 	 * @return void
 	 */
 	function __construct( $mysql ) {
-		users::$mysql = $mysql;
-		$result = $mysql->query( "SELECT * FROM `" . $mysql->prefix() . "user`", true );
+		$this->mysql = $mysql;
+		$result = $this->mysql->query( "SELECT * FROM `" . $this->mysql->prefix() . "user`", true );
 		if( $result !== false ) {
 			$this->users = array();
 			foreach( $result as $row ) {
-				array_push( $this->users, new user( $row["uid"], $row["uname"], $row["upermissions"], $row["password"] ) );
+				try {
+					array_push( $this->users, new user( $this, $row["uid"], $row["uname"], $row["upermissions"], $row["password"] ) );
+				} catch( Exception $e ) {}
 			}
 		}
 	}
@@ -52,8 +54,6 @@ class users {
 	 * Searches a user by its (normaly) unique name and returns all user information.
 	 * If the user name exists more than once only the first found is returned.
 	 *
-	 * @todo Maybe let this method die
-	 *
 	 * @param string $uname User name
 	 * @return user|null Returns user object. NULL if no user was found.
 	 */
@@ -75,7 +75,7 @@ class users {
 	 */
 	public function getUserByCharacterId( $cid ) {
 		foreach( $this->users as $user ) {
-			$res = users::$mysql->query( "SELECT * FROM `" . users::$mysql->prefix() . "character` WHERE `cid` = " . intval( $cid ), true );
+			$res = $this->$mysql->query( "SELECT * FROM `" . $this->$mysql->prefix() . "character` WHERE `cid` = " . intval( $cid ), true );
 			if( count( $res ) > 0 ) {
 				return $this->getUserById( $res[0]["uid"] );
 			}
@@ -123,10 +123,13 @@ class users {
 	public function newUser( $uname, $password ) {
 		if( empty( $uname ) || empty( $password ) )
 			return false;
-
-		$newuser = new user( -1, $uname, "", crypt( $password, $uname ) );
-		array_push( $this->users, $newuser );
-		return $newuser->save( users::$mysql );
+		try {
+			$newuser = new user( $this, -1, $uname, "", crypt( $password, $uname ) );
+			array_push( $this->users, $newuser );
+			return $newuser->save( $this->$mysql );
+		} catch( Exception $e ) {
+			return false;
+		}
 	}
 
 }
