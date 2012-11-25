@@ -3,8 +3,8 @@
  * User object gives you functions for managing all user
  *
  * @author  Pascal Pohl
- * @version 1.0
- * @since   2012-11-17
+ * @version 1.2
+ * @since   2012-11-25
  */
 class users {
 
@@ -94,13 +94,16 @@ class users {
 	 * Function to authenticate a user by its user name and password
 	 *
 	 * @param string $uname User name
-	 * @param string $password Uncrypted password of the user
+	 * @param string $password Password of the user
+	 * @param boolean $crypted Defines if password is already crypted
 	 * @return int Returns an error code. Can be user::AUTH_SUCCESS, user::AUTH_PASSWORD_WRONG or user::AUTH_USER_UNKNOWN
 	 */
-	public function authUser( $uname, $password ) {
+	public function authUser( $uname, $password, $crypted = false ) {
 		$user = $this->getUserByName( $uname );
 		if( $user != null ) {
-			if( crypt( $password, $uname ) == $user->getPassword() ) {
+			$pwd = $password;
+			if( !$crypted ) $pwd = crypt( $password, $uname );
+			if( $pwd == $user->getPassword() ) {
 				return users::AUTH_SUCCESS;
 			} else {
 				return users::AUTH_PASSWORD_WRONG;
