@@ -4,185 +4,170 @@
  *
  * @author  Pascal Pohl
  * @version 1.0
- * @since   2012-11-17
+ * @since   2012-11-25
  */
 class user {
+		
+	private $uid;
+	private $uname;
+	private $upermissions;
+	private $password;
 
-	private $users = array();
-	private $mysql;
-
-	const AUTH_USER_UNKNOWN = 1;
-	const AUTH_PASSWORD_WRONG = 2;
-	const AUTH_SUCCESS = 3;
+	private $character;
 
 	/**
-	 * Constructor of the user object. Gets all userinfomations and saves them local.
+	 * Constructor of the user object.
 	 *
-	 * @param mysql $mysql MySQL object for database access
+	 * @param int $uid UserID (-1 if new user)
+	 * @param string $uname Name of the User
+	 * @param string $upermissions String of the permissions (until we have permission object)
+	 * @param string $password Crypted password
 	 * @return void
 	 */
-	function __construct( $mysql ) {
-		$this->mysql = $mysql;
-		$result = $mysql->query( "SELECT * FROM `" . $mysql->prefix() . "user`", true );
-		if( $result !== false ) {
-			$this->users = $result;
-		}
+	function __construct( $uid, $uname, $upermissions, $password ) {
+		$this->uid = intval( $uid );
+		$this->uname = $uname;
+		$this->upermissions = $upermissions;
+		$this->password = $password;
 	}
 
 	/**
-	 * Searches a user by its unique id and returns all user information
+	 * Get user id
 	 *
-	 * @param int $uid User id
-	 * @return array Array that includes all user information. Empty array if no user was found.
+	 * @return int
 	 */
-	public function getUserById( $uid ) {
-		foreach( $this->users as $user ) {
-			if( $uid == $user["uid"] ) {
-				return $user;
-			}
-		}
-
-		return array();
+	public function getUID() {
+		return $this->uid;
 	}
 
 	/**
-	 * Searches a user by its (normaly) unique name and returns all user information.
-	 * If the user name exists more than once only the first found is returned.
+	 * Get user name
 	 *
-	 * @param string $uname User name
-	 * @return array Array that includes all user information. Empty array if no user was found.
+	 * @return string
 	 */
-	public function getUserByName( $uname ) {
-		foreach( $this->users as $user ) {
-			if( $uname == $user["uname"] ) {
-				return $user;
-			}
-		}
-
-		return array();
+	public function getName(){
+		return $this->uname;
 	}
 
 	/**
-	 * Get all user information by a character id
+	 * Has user permission
 	 *
-	 * @param int $cid Character id
-	 * @return array Array that includes all user information. Empty array if no user was found.
+	 * @todo Well... everything
 	 */
-	public function getUserByCharacterId( $cid ) {
-		foreach( $this->users as $user ) {
-			$res = $this->mysql->query( "SELECT * FROM `" . $this->mysql->prefix() . "character` WHERE `cid` = " . intval( $cid ), true );
-			if( count( $res ) > 0 ) {
-				return $this->getUserById( $res[0]["uid"] );
-			}
-			/*$character = $this->getCharacterByUserId( $user["uid"] );
-			foreach( $character as $char ) {
-				if( $char->getInfo( character::ID ) == $cid ) {
-					return $user;
-				}
-			}*/
-		}
-
-		return array();
+	public function hasPermission(){
+		// TODO: Permissions
 	}
 
 	/**
-	 * Get all characters by a user id
+	 * Get crypted user password
 	 *
-	 * @param int $uid User id
+	 * @return string
+	 */
+	public function getPassword() {
+		return $this->password;
+	}
+
+	/**
+	 * Set user name
+	 *
+	 * @param string $uname The (new) name of the user. Must not be empty.
+	 * @return boolean Returns false if $uname empty
+	 */
+	public function setName( $uname ) {
+		if( !empty( $uname ) ) {
+			$this->uname = $uname;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Set user password
+	 *
+	 * @param string $password The (new,) crypted password of the use. Most not be empty.
+	 * @return boolean Returns false if $password empty
+	 */
+	public function setPassword( $password ) {
+		if( !empty( $password ) ) {
+			$this->password = $password;
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Get all characters of that user
+	 *
 	 * @return array Array that includes all characters. Empty array if no character were found.
 	 */
-	public function getCharacterByUserId( $uid ) {
-		$user = $this->getUserById( $uid );
+	public function getCharacter() {
+		if( $this->uid == -1 )
+			return array();
 
-		if( !isset( $user["character"] ) ) {
-			$result = $this->mysql->query( "SELECT * FROM `" . $this->mysql->prefix() . "character` WHERE `uid` = " . intval( $user["uid"] ), true );
-			$user["character"] = array();
+		if( !isset( $this->character ) || !is_array( $this->character ) || $this->character == null ) {
+			$result = users::$mysql->query( "SELECT * FROM `" . users::$mysql->prefix() . "character` WHERE `uid` = " . $this->uid, true );
+			$this->character = array();
 			foreach( $result as $row ) {
-				array_push( $user["character"], new character( $row ) );
+				array_push( $this->character, new character( $row ) );
 			}
 		}
 
-		return $user["character"];
+		return $this->character;
 	}
 
 	/**
 	 * Creates a new character for a user
 	 *
-	 * @param int $uid User id
+	 * @param mysql $mysql MySQL object in which the character gets created
 	 * @param string $cname Character name
 	 * @param array $infos Additional infos for the character
 	 * @return boolean Returns false on error and true on success
 	 */
-	public function ceateCharacterForUserId( $uid, $cname, $infos = array() ) {
-		$usr = $this->getUserById( $uid );
-		if( count( $usr ) > 0 ) {
-			if( empty( $cname ) )
-				return false;
-
-			if( !is_array( $infos ) )
-				return false;
-
-			$res = $this->mysql->query( "SELECT * FROM `" . $this->mysql->prefix() . "character` WHERE `cname` = '" . mysql_real_escape_string( $cname ) . '"', true );
-			if( count( $res ) > 0 )
-				return false;
-
-			$infos["uid"] = $uid;
-			$infos["cname"] = $cname;
-
-			$c = new character( $infos );
-			return $c->save( $this->mysql );
-		} else {
+	public function ceateCharacter( $mysql, $cname, $infos = array() ) {
+		if( $this->uid == -1 )
 			return false;
-		}
+
+		if( empty( $cname ) )
+			return false;
+
+		if( !is_array( $infos ) )
+			return false;
+
+		$res = $mysql->query( "SELECT * FROM `" . $mysql->prefix() . "character` WHERE `cname` = '" . mysql_real_escape_string( $cname ) . '"', true );
+		if( count( $res ) > 0 )
+			return false;
+
+		$infos["uid"] = $this->uid;
+		$infos["cname"] = $cname;
+
+		$c = new character( $infos );
+		return $c->save( $mysql );
 	}
 
 	/**
-	 * Function to authenticate a user by its user name and password
+	 * Saves all changes in the user object in the database provided
 	 *
-	 * @param string $uname User name
-	 * @param string $password Uncrypted password of the user
-	 * @return int Returns an error code. Can be user::AUTH_SUCCESS, user::AUTH_PASSWORD_WRONG or user::AUTH_USER_UNKNOWN
+	 * @param mysql $mysql MySQL object in which the changes getting saved
+	 * @return boolean True on succes, false otherwise
 	 */
-	public function authUser( $uname, $password ) {
-		$user = $this->getUserByName( $uname );
-		if( isset( $user["password"] ) ) {
-			if( crypt( $password, $uname ) == $user["password"] ) {
-				return user::AUTH_SUCCESS;
-			} else {
-				return user::AUTH_PASSWORD_WRONG;
-			}
+	public function save( $mysql ) {
+		if( empty( $this->uname ) )
+			return false;
+
+		if( empty( $this->password ) )
+			return false;
+
+		if( $this->uid == -1 ) {
+			$res = $mysql->query( "INSERT INTO `" . $mysql->prefix() . "user` ( `uname`, `upermissions`, `password` ) VALUES" .
+																			" ( '" . mysql_real_escape_string( $this->uname ) . "', '" . mysql_real_escape_string( $this->upermissions ) . "', '" . mysql_real_escape_string( $this->password ) . "' )" );
+			$this->uid = $mysql->getLastInsertId();
+			return $res;
 		} else {
-			return user::AUTH_USER_UNKNOWN;
-		}
-	}
-
-	/**
-	 * Creates a new user
-	 *
-	 * @param string $uname User name
-	 * @param string $password Uncrypted password of the user
-	 * @return boolean Returns false on error like the user already exists and returns true on success.
-	 */
-	public function newUser( $uname, $password ) {
-		if( empty( $uname ) || empty( $password ) )
-			return false;
-
-		$usr = $this->getUserByName( $uname );
-		if( isset( $usr["uid"] ) ) {
-			return false;
-		}
-
-		$res = $this->mysql->query( "INSERT INTO `" . $this->mysql->prefix() . "user` ( `uname`, `password` ) VALUES ( '" . mysql_real_escape_string( $uname ) . "', '" . mysql_real_escape_string( crypt( $password, $uname ) ) . "' )" );
-		if( $res ) {
-			// refreshing local data
-			$result = $this->mysql->query( "SELECT * FROM `" . $this->mysql->prefix() . "user`", true );
-			if( $result !== false ) {
-				$this->users = $result;
-			}
-
-			return true;
-		} else {
-			return false;
+			return $mysql->query( "UPDATE  `" . $mysql->prefix() . "user` SET `uname` = '" . mysql_real_escape_string( $this->uname ) . "'," .
+																			" `upermissions` = '" . mysql_real_escape_string( $this->upermissions ) . "'," .
+																			" `password` = '" . mysql_real_escape_string( $this->password ) . "' WHERE `uid` = " . $this->uid );
 		}
 	}
 
