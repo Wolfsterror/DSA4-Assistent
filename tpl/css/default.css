@@ -85,10 +85,20 @@ body {
 	border-right: 2px solid #5b3e14;
 }
 
-header > h2 {
-	margin: 0px;
+body > header {
+	text-align: center;
+	padding: 10px;
+}
+
+body > header > h2 {
 	padding: 20px;
 	border-bottom: 3px solid #b49b73;
+	display: none;
+}
+
+body > header > img {
+	width: 600px;
+	height: 155px;
 }
 
 body > nav {
