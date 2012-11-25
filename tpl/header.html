@@ -18,10 +18,16 @@
 				<!-- Left menu -->
 				<li><a href="index.php?c=0"><span aria-hidden="true" class="icon-home"></span> Start</a></li>
 				<li><a href="index.php?c=1"><span aria-hidden="true" class="icon-user"></span> Benutzer</a></li>
-				<li><a href="#"><span aria-hidden="true" class="icon-clipboard"></span> Charaktere</a></li>
+				<li><a href="index.php?c=2"><span aria-hidden="true" class="icon-clipboard"></span> Charaktere</a></li>
 				<!-- Right menu -->
-				<li class="right"><span aria-hidden="true" class="icon-enter"></span> <a href="#">Login</a></li>
-				<li class="right"><span aria-hidden="true" class="icon-key"></span> <a href="#">Registrieren</a></li>
+				<li class="right"><a href="index.php?c=3"><?php
+if( LOGGEDIN ) {
+	echo '<span aria-hidden="true" class="icon-exit"></span> Logout</a>';
+} else {
+	echo '<span aria-hidden="true" class="icon-enter"></span> Login</a></li>
+				<li class="right"><a href="index.php?c=4"><span aria-hidden="true" class="icon-key"></span> Registrieren</a>';
+}
+?></li>
 			</ul>
 		</nav>
 		<section id="content">

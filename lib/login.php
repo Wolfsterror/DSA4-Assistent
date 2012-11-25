@@ -18,34 +18,39 @@ if( !defined( "LOGGEDIN" ) && isset( $users ) ) {
 	// will be destroyed.
 	if( isset( $_SESSION["login_usr"] ) && isset( $_SESSION["login_pwd"] ) ) {
 		$auth = $users->authUser( $_SESSION["login_usr"], $_SESSION["login_pwd"], true );
-		if( $auth ) {
+		if( $auth == users::AUTH_SUCCESS ) {
 			$user = $users->getUserByName( $_SESSION["login_usr"] );
 			define( "LOGGEDIN", $user->getUID() );
+			define( "LOGINERROR", $auth );
 
 			unset( $user );
 		} else {
 			session_destroy();
 			define( "LOGGEDIN", false );
+			define( "LOGINERROR", $auth );
 		}
 		unset( $auth );
 
 	// Working with POST data. If login is successfull it will create SESSION data.
 	} else if( isset( $_POST["login_usr"] ) && isset( $_POST["login_pwd"] ) ) {
-		$auth = $users->authUser( $_SESSION["login_usr"], $_SESSION["login_pwd"] );
-		if( $auth ) {
-			$user = $users->getUserByName( $_SESSION["login_usr"] );
+		$auth = $users->authUser( $_POST["login_usr"], $_POST["login_pwd"] );
+		if( $auth == users::AUTH_SUCCESS ) {
+			$user = $users->getUserByName( $_POST["login_usr"] );
 			$_SESSION["login_usr"] = $user->getName();
 			$_SESSION["login_pwd"] = $user->getPassword();
 			define( "LOGGEDIN", $user->getUID() );
+			define( "LOGINERROR", $auth );
 
 			unset( $user );
 		} else {
 			define( "LOGGEDIN", false );
+			define( "LOGINERROR", $auth );
 		}
 		unset( $auth );
 
 	// If nothing is provided the user is not logged in and isn't trying to.
 	} else {
 		define( "LOGGEDIN", false );
+		define( "LOGINERROR", 4 );
 	}
 }
