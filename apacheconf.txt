@@ -1,0 +1,17 @@
+== Datei öffnen:
+EasyPHP-12.1\apache\conf\httpd.conf
+
+== Zeile 356 hinzufügen:
+Alias /dsa4 "PFAD/ZUM/REPOSITORY/DSA4-Assistent/"
+
+== Zeile 390 hinzufügen:
+    <Directory "PFAD/ZUM/REPOSITORY/DSA4-Assistent/">
+        Options FollowSymLinks Indexes
+        AllowOverride All
+        Order deny,allow
+        Allow from 127.0.0.1
+        Deny from all
+        Require all granted
+    </Directory>
+
+== Datei speichern!
