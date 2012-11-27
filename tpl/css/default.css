@@ -78,11 +78,20 @@ body > nav a {
  * LAYOUT
  */
 
+html {
+	height: 100%;
+}
+
 body {
+	position: relative;
 	width: 900px;
 	margin: auto;
 	border-left: 2px solid #5b3e14;
 	border-right: 2px solid #5b3e14;
+	min-height: 100%;
+}
+* html body {
+	height: 100%;
 }
 
 body > header {
@@ -132,7 +141,7 @@ section#content {
 	width: 90%;
 	margin: auto;
 	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-bottom: 60px;
 }
 
 section#content header > h1 {
@@ -145,9 +154,11 @@ section#content header > h1 {
 }
 
 body > footer {
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
 	border-top: 3px solid #b49b73;
-	border-bottom: 2px solid #5b3e14;
-	padding: 5px;
-	margin-bottom: 50px;
-	box-shadow: rgba( 0, 0, 0, 0.25 ) 0 5px 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	height: 40px;
 }
