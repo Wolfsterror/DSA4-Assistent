@@ -9,3 +9,5 @@ require_once 'lib/mysql.php';
 require_once 'obj/user.php';
 require_once 'obj/users.php';
 require_once 'obj/character.php';
+require_once 'obj/game.php';
+require_once 'obj/games.php';

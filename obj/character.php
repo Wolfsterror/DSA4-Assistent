@@ -3,8 +3,8 @@
  * Character object gives you functions for managing a character
  *
  * @author  Pascal Pohl
- * @version 0.5
- * @since   2012-11-17
+ * @version 0.6
+ * @since   2012-12-08
  */
 class character {
 
@@ -26,7 +26,9 @@ class character {
 		"CharClass" => "cclass",
 		"Title" => "ctitle",
 		"Social" => "csocial",
-		"Story" => "cstory"
+		"Story" => "cstory",
+		"Public" => "public",
+		"Game" => "gid"
 	);
 
 	const Sex_Male = 1;

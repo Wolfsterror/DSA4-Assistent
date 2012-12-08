@@ -4,7 +4,7 @@
  *
  * @author  Pascal Pohl
  * @version 1.0
- * @since   2012-11-25
+ * @since   2012-12-08
  */
 class user {
 		
@@ -111,11 +111,12 @@ class user {
 	}
 
 	/**
-	 * Get all characters of that user
+	 * Get characters of that user by game id
 	 *
+	 * @param int $gid Game id as a filter. If -1, no filter is used.
 	 * @return array Array that includes all characters. Empty array if no character were found.
 	 */
-	public function getCharacter() {
+	public function getCharacter( $gid = -1 ) {
 		if( $this->uid == -1 )
 			return array();
 
@@ -127,7 +128,18 @@ class user {
 			}
 		}
 
-		return $this->character;
+		$filter = array();
+		if( $gid == -1 ) {
+			$filter = $this->character;
+		} else {
+			foreach( $this->character as $char ) {
+				if( $char->getInfo( character::$infoid["Game"] ) == $gid ) {
+					array_push( $filter, $char );
+				}
+			}
+		}
+
+		return $filter;
 	}
 
 	/**
