@@ -41,7 +41,7 @@ switch( $_GET["c"] ) {
 
 			</article>';
 		break;
-	case 2:		
+	case 2:
 		echo '
 			<header><h1><span aria-hidden="true" class="icon-clipboard"></span> Charaktere</h1></header>
 			<article>
@@ -69,6 +69,9 @@ switch( $_GET["c"] ) {
 			if( isset( $_GET["loggedout"] ) ) {
 				echo '
 			<strong style="color:green">Erfolgreich ausgeloggt.</strong>';
+			} else if( isset( $_GET["registered"] ) ) {
+				echo '
+			<strong style="color:green">Erfolgreich registriert. Du kannst dich nun einloggen.</strong>';
 			} else if( isset( $_POST["login_usr"] ) ) {
 				switch( LOGINERROR ) {
 					default:
@@ -97,19 +100,29 @@ switch( $_GET["c"] ) {
 			</article>';
 		}
 		break;
-	case 4:		
+	case 4:
 		echo '
-			<header><h1><span aria-hidden="true" class="icon-clipboard"></span> Charaktere</h1></header>
+			<header><h1><span aria-hidden="true" class="icon-key"></span> Neuen Benutzer registrieren</h1></header>';
+		if( LOGGEDIN ) {
+			echo '<strong>Du bist hier falsch. Wenn du eigentlich nicht eingeloggt sein solltest, <a href="index.php?c=3">logge dich bitte sofort aus.</a></strong>';
+		} else {
+			include 'lib/register.php';
+			if( defined( "REGISTER_ERROR" ) ) {
+				echo '
+			<strong style="color:red">' . REGISTER_ERROR . '</strong>';
+			}
+			echo '
 			<article>
-				<br />
-				Hier findest du eine auflistung aller Charaktere, die von den Usern als öffentlich makiert wurden.<br />
-				Jeder Char hat seine eigene Seite, klicke einfach auf den Namen um dir einen Char genauer an zu schauen<br />
-				Wenn du eingeloggt bist, kriegst du sogar noch mehr Informationen. Denn neben der Liste die du hier siehst,<br />
-				bekommst du noch eine Liste deiner eigenen Chars und kannst diese modofizieren.<p>
-				
-				Also viel Spaß beim stöbern!<br />
-
+				<form action="index.php?c=4&register" method="post">
+					<table>
+						<tr><td valign="top"><strong>Name:</strong></td><td><input type="text" name="register_usr" /><br /><small>Darf nicht leer sein. Leerzeichen und Tabs am Anfang und am Ende werden herausgeschnitten.</small></td></tr>
+						<tr><td valign="top"><strong>Passwort:</strong></td><td><input type="password" name="register_pwd" /><br /><small>Muss aus mind. 6 Zeichen bestehen.</small></td></tr>
+						<tr><td valign="top"><strong>Passwort bestätigen:</strong></td><td><input type="password" name="register_repwd" /><br /><small>Bestätige das Passwort damit wir prüfen können ob du es tatsächlich richtig eingegeben hast.</small></td></tr>
+						<tr><td colspan="2" align="center"><input type="submit" value="Registrieren" /></td></tr>
+					</table>
+				</form>
 			</article>';
+		}
 		break;
 
 }

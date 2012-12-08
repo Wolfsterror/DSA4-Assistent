@@ -126,7 +126,7 @@ class users {
 		try {
 			$newuser = new user( $this, -1, $uname, "", crypt( $password, $uname ) );
 			array_push( $this->users, $newuser );
-			return $newuser->save( $this->$mysql );
+			return $newuser->save( $this->mysql );
 		} catch( Exception $e ) {
 			return false;
 		}
