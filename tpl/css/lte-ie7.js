@@ -6,17 +6,22 @@ window.onload = function() {
 		el.innerHTML = '<span style="font-family: \'icomoon\'">' + entity + '</span>' + html;
 	}
 	var icons = {
-			'icon-home' : '&#xe000;',
-			'icon-pencil' : '&#xe006;',
-			'icon-user' : '&#xe037;',
-			'icon-key' : '&#xe03f;',
-			'icon-equalizer' : '&#xe04e;',
-			'icon-remove' : '&#xe05e;',
-			'icon-enter' : '&#xe098;',
-			'icon-exit' : '&#xe099;',
-			'icon-mail' : '&#xe015;',
-			'icon-calendar' : '&#xe01b;',
-			'icon-clipboard' : '&#xe072;'
+			'icon-cog' : '&#xe000;',
+			'icon-comments' : '&#xe001;',
+			'icon-wrench' : '&#xe002;',
+			'icon-tree-view' : '&#xe003;',
+			'icon-book' : '&#xe004;',
+			'icon-home' : '&#xe005;',
+			'icon-clipboard' : '&#xe006;',
+			'icon-equalizer' : '&#xe007;',
+			'icon-user' : '&#xe008;',
+			'icon-exit' : '&#xe00a;',
+			'icon-key' : '&#xe00b;',
+			'icon-enter' : '&#xe00c;',
+			'icon-pencil' : '&#xe00d;',
+			'icon-remove' : '&#xe009;',
+			'icon-mail' : '&#xe00e;',
+			'icon-calendar' : '&#xe00f;'
 		},
 		els = document.getElementsByTagName('*'),
 		i, attr, html, c, el;
