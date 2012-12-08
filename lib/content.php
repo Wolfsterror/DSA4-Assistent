@@ -124,5 +124,23 @@ switch( $_GET["c"] ) {
 			</article>';
 		}
 		break;
+	case 5:
+		echo '
+			<header><h1><span aria-hidden="true" class="icon-wrench"></span> Einstellungen</h1></header>
+			<article>
+				<br />
+				Text folgt
+				<br />
+			</article>';
+		break;
+	case 6:
+		echo '
+			<header><h1><span aria-hidden="true" class="icon-book"></span>Gruppen</h1></header>
+			<article>
+				<br />
+				Text folgt
+				<br />
+			</article>';
+		break;
 
 }
