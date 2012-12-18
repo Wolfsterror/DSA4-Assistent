@@ -4,7 +4,7 @@
  *
  * @author  Pascal Pohl
  * @version 0.6
- * @since   2012-12-08
+ * @since   2012-12-18
  */
 class character {
 
@@ -20,6 +20,7 @@ class character {
 		"Sex" => "csex",
 		"Birth" => "cbirth",
 		"Size" => "csize",
+		"Weight" => "cweight",
 		"HairColor" => "chaircolor",
 		"EyeColor" => "ceyecolor",
 		"Description" => "cdescription",

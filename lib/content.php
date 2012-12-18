@@ -228,10 +228,112 @@ switch( $_GET["c"] ) {
 					$game = $games->getGameById( $_GET["gid"] );
 					$user = $users->getUserById( $_GET["uid"] );
 					if( $game && $user && ($game->getMaster()->getUID() == LOGGEDIN || $user->getUID() == LOGGEDIN) ) {
+						$races = json_decode( file_get_contents( "res/rassen.json" ), true );
+						$raceselect = '';
+						foreach( $races as $k => $r ) {
+							$raceselect .= '<option value="' . $k . '">' . $r["name"] . '</option>';
+						}
 						echo '
 			<header><h1><span aria-hidden="true" class="icon-clipboard"></span> Neuer Character für ' . $user->getName() . ' in ' . $game->getName() . '</h1></header>
-			<article>';
-						echo '
+			<article>
+				<table style="width:100%">
+					<tr>
+						<td colspan="2">
+							<fieldset>
+								<legend>Grunddaten</legend>
+								<table style="width:100%">
+									<tr>
+										<td style="width:20%"><strong>Name:</strong></td>
+										<td style="width:30%"><input type="text" name="name" style="width:90%" /></td>
+										<td style="width:20%"><strong>Generierungspunkte:</strong></td>
+										<td style="width:30%"><output id="gp">110</output></td>
+									</tr>
+									<tr>
+										<td style="width:20%"><strong>Rasse:</strong></td>
+										<td style="width:30%"><select name="race"><option value="-1">---</option>' . $raceselect . '</select></td>
+										<td style="width:20%"><strong>(Modifikationen):</strong></td>
+										<td style="width:30%"><output id="racemod"></output></td>
+									</tr>
+									<tr>
+										<td style="width:20%"><strong>Kultur:</strong></td>
+										<td style="width:30%"><i>Bitte Rasse wählen</i></td>
+										<td style="width:20%"><strong>(Modifikationen):</strong></td>
+										<td style="width:30%"><output id="culturemod"></output></td>
+									</tr>
+									<tr>
+										<td style="width:20%"><strong>Profession:</strong></td>
+										<td style="width:30%"><select name="profession"></select></td>
+										<td style="width:20%"><strong>(Modifikationen):</strong></td>
+										<td style="width:30%"><output id="profemod"></output></td>
+									</tr>
+								</table>
+							</fieldset>
+						</td>
+					</tr>
+					<tr>
+						<td style="width:50%" valign="top">
+							<fieldset>
+								<legend>Aussehen</legend>
+								<table style="width:100%">
+									<tr>
+										<td style="width:35%"><strong>Geschlecht:</strong></td>
+										<td style="width:65%"><select name="sex"><option value="3">Unbekannt</option><option value="1">Männlich</option><option value="2">Weiblich</option></td>
+									</tr>
+									<tr>
+										<td style="width:35%"><strong>Alter:</strong></td>
+										<td style="width:65%"><input type="text" name="age" style="width:90%" /></td>
+									</tr>
+									<tr>
+										<td style="width:35%"><strong>Größe:</strong></td>
+										<td style="width:65%"><input type="text" name="size" style="width:90%" /></td>
+									</tr>
+									<tr>
+										<td style="width:35%"><strong>Gewicht:</strong></td>
+										<td style="width:65%"><input type="text" name="weight" style="width:90%" /></td>
+									</tr>
+									<tr>
+										<td style="width:35%"><strong>Haarfarbe:</strong></td>
+										<td style="width:65%"><select name="haircolor"><option value="-1">Eigene</option></select></td>
+									</tr>
+									<tr>
+										<td style="width:35%"><strong>Augenfarbe:</strong></td>
+										<td style="width:65%"><select name="eyecolor"><option value="-1">Eigene</option></select></td>
+									</tr>
+									<tr>
+										<td colspan="2"><strong>Aussehen:</strong></td>
+									</tr>
+									<tr>
+										<td colspan="2"><textarea name="description" style="width:100%;height:100px;resize:vertical;"></textarea></td>
+									</tr>
+								</table>
+							</fieldset>
+						</td>
+						<td style="width:50%" valign="top">
+							<fieldset>
+								<legend>Geschichte</legend>
+								<table style="width:100%">
+									<tr>
+										<td style="width:35%"><strong>Stand:</strong></td>
+										<td style="width:65%"><input type="text" name="class" style="width:90%" /></td>
+									</tr>
+									<tr>
+										<td style="width:35%"><strong>Titel:</strong></td>
+										<td style="width:65%"><input type="text" name="title" style="width:90%" /></td>
+									</tr>
+									<tr>
+										<td style="width:35%"><strong>Sozialstatus:</strong></td>
+										<td style="width:65%"><input type="text" name="social" style="width:90%" /></td>
+									</tr>
+									<tr>
+										<td colspan="2"><strong>Familie/Herkunft/Hintergrund:</strong></td>
+									</tr>
+										<td colspan="2"><textarea name="story" style="width:100%;height:100px;resize:vertical;"></textarea></td>
+									</tr>
+								</table>
+							</fieldset>
+						</td>
+					</tr>
+				</table>
 			</article>';
 					}
 				}

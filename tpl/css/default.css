@@ -63,6 +63,22 @@ hr {
 	border-bottom: 1px solid #b49b73;
 }
 
+fieldset {
+	border: 2px solid #b49b73;
+	border-radius: 5px;
+}
+fieldset > legend {
+	border: 2px solid #b49b73;
+	border-radius: 3px;
+}
+fieldset table {
+	border-spacing: 0px;
+}
+fieldset table td {
+	padding: 3px;
+	border-bottom: 1px solid #b49b73;
+}
+
 /**
  * TYPOGRAPHIE
  */
