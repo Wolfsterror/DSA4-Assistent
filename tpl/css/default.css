@@ -40,6 +40,14 @@ body > section#content {
 	background-color: #f3dfbc;
 }
 
+body > section#content a {
+	color: maroon;
+}
+body > section#content a:hover {
+	text-shadow: #000000 0px 0px 10px;
+}
+
+
 body > footer {
 	background-color: #d1a679;
 	background-image: url( ../res/tex.png );
@@ -77,6 +85,11 @@ body > footer {
 
 body > nav a {
 	text-decoration: none;
+}
+
+body input, body textarea {
+	font-family: 'PT Serif', serif;
+	font-size: 13px;
 }
 
 /**
@@ -158,6 +171,15 @@ section#content header > h1 {
 	margin-bottom: 5px;
 }
 
+section#content > article > h3 {
+	margin: 0px;
+	width: 80%;
+	padding: 5px;
+	padding-bottom: 0px;
+	margin-bottom: 5px;
+	border-bottom: 1px solid #b49b73;
+}
+
 body > footer {
 	position: absolute;
 	bottom: 0px;
@@ -169,8 +191,13 @@ body > footer {
 }
 
 .nicelist {
-	padding: 10px;
+	padding: 5px;
+	clear: both;
 }
 .nicelist:nth-child(even) {
 	background-color: #d7c5a6;
+}
+
+.nicelist > .options {
+	float: right;
 }

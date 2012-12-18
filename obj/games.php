@@ -80,7 +80,7 @@ class games {
 				continue;
 			}
 
-			foreach( $game->getUser as $user ) {
+			foreach( $game->getUser() as $user ) {
 				if( $user->getUID() == $uid ) {
 					array_push( $ret, $game );
 					break;

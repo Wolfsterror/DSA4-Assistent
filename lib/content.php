@@ -152,11 +152,10 @@ switch( $_GET["c"] ) {
 				<strong>Du bist leider noch in gar keiner Gruppe.</strong><br />
 				Einladungen in eine Gruppe werden hier angezeigt und du kannst natürlich auch eigene erstellen.';
 			}
-			echo '<strong>Deine Gruppen</strong>';
 			foreach( $games as $g ) {
 				echo '
 				<div class="nicelist">
-					' . $g->getName() . '<br />
+					<a href="index.php?c=7&amp;gid=' . $g->getID() . '">' . $g->getName() . '</a><br />
 					<small><strong>' . $g->getMaster()->getName() . '</strong>';
 				$usrlist = '';
 				foreach( $g->getUser() as $usr ) {
@@ -173,6 +172,60 @@ switch( $_GET["c"] ) {
 				</form>
 			</article>';
 		}
+		break;
+	case 7:
+
+		if( LOGGEDIN && isset( $_GET["gid"] ) ) {
+			$game = $games->getGameById( $_GET["gid"] );
+			if( $game ) {
+				$master = $game->getMaster();
+				echo '
+			<header><h1><span aria-hidden="true" class="icon-book"></span> Gruppe: ' . $game->getName() . '</h1></header>
+			<article>
+				<h3>Spielleiter</h3>
+				<div class="nicelist">' . ( ($master->getUID() == LOGGEDIN) ? 'Du' : $master->getName() ) . '</div>
+				<h3>Spieler</h3>';
+				foreach( $game->getUser() as $player ) {
+					$char = $player->getCharacter( $game->getID() );
+					$charid = -1;
+					if( count( $char ) > 0 )
+						$charid = $char[0]->getInfo( character::$infoid["ID"] );
+					echo '
+				<div class="nicelist">
+					<div class="options"><a href="index.php?c=8&amp;gid=' . $game->getID() . '&amp;cid=' . $charid . '">Charakter</a>' . (($master->getUID() == LOGGEDIN)? ' | <a href="">Spieler entfernen</a> | <a href="">Spielleiter ernennen</a>' : '') . '</div>
+					' . $player->getName() . '
+				</div>';
+				}
+				echo '
+				<h3>Notizen</h3>';
+				if( $master->getUID() == LOGGEDIN ) {
+					if( isset( $_POST["newnotes"] ) ) {
+						$game->setNotes( $_POST["newnotes"] );
+						$game->save( $mysql );
+					}
+					echo '
+				<form action="index.php?c=7&amp;gid=' . $game->getID() . '" method="post">
+					<textarea name="newnotes" style="width:100%;height:200px;resize:vertical;">' . htmlentities( $game->getNotes() ) . '</textarea><br />
+					<input type="submit" name="savenotes" value="Speichern" />
+				</form>';
+				} else {
+					echo str_replace( "\n", "<br />", htmlentities( $game->getNotes() ) );
+				}
+				echo '
+			</article>';
+			} else {
+				$err = str_replace( "{OBJECT}", "Gruppe", $notfound );
+				echo str_replace( "{REASON}", "", $err );
+			}
+		}
+
+		break;
+	case 8:
+
+		if( isset( $_GET["cid"] ) ) {
+			$user = $users->getUserByCharacterId( $_GET["cid"] );
+		}
+
 		break;
 
 }
