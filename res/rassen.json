@@ -1,0 +1,54 @@
+[
+	{
+		"name": "Mittelländer",
+		"haircolor": [ "schwarz", "braun", "dunkelblond", "blond", "weißblond", "rot" ],
+		"eyecolor": [ "dunkelbraun", "braun", "grün", "blau", "grau", "schwarz" ],
+		"size": 1.6,
+		"weight": "size - 100 rocks",
+		"properties": {},
+		"hp": 10,
+		"dp": 10,
+		"mr": -4,
+		"benefits": [],
+		"cultures": []
+	},
+	{
+		"name": "Tulamiden",
+		"haircolor": [ "schwarz", "dunkelbraun", "mittelbraun", "hellbraun", "blond", "rot" ],
+		"eyecolor": [ "schwarz", "dunkelbraun", "braun", "grau", "grün", "blau" ],
+		"size": 1.55,
+		"weight": "size -105 rocks",
+		"properties": {},
+		"hp": 10,
+		"dp": 10,
+		"mr": -4,
+		"benefits": [],
+		"cultures": []
+	},
+	{
+		"name": "Thorwaler",
+		"haircolor": [ "blond", "rot-blond", "weißblond", "rot", "dunkelblond", "braun", "schwarz"],
+		"eyecolor": [ "dunkelbraun", "braun", "grün", "blau", "grau" ],
+		"size": 1.68,
+		"weight": "size -95 rocks",
+		"properties": { "courage": 1, "constitution": 1, "strength": 1 },
+		"hp": 11,
+		"dp": 10,
+		"mr": -5,
+		"benefits": [ "Jähzorn 6" ],
+		"cultures": []
+	},
+	{
+		"name": "",
+		"haircolor": [],
+		"eyecolor": [],
+		"size": 0,
+		"weight": "",
+		"properties": {},
+		"hp": 0,
+		"dp": 0,
+		"mr": 0,
+		"benefits": [],
+		"cultures": []
+	}
+]

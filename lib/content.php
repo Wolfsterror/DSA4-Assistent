@@ -192,7 +192,7 @@ switch( $_GET["c"] ) {
 						$charid = $char[0]->getInfo( character::$infoid["ID"] );
 					echo '
 				<div class="nicelist">
-					<div class="options"><a href="index.php?c=8&amp;gid=' . $game->getID() . '&amp;cid=' . $charid . '">Charakter</a>' . (($master->getUID() == LOGGEDIN)? ' | <a href="">Spieler entfernen</a> | <a href="">Spielleiter ernennen</a>' : '') . '</div>
+					<div class="options"><a href="index.php?c=8&amp;gid=' . $game->getID() . '&amp;uid=' . $player->getUID() . '&amp;cid=' . $charid . '">Charakter</a>' . (($master->getUID() == LOGGEDIN)? ' | <a href="">Spieler entfernen</a> | <a href="">Spielleiter ernennen</a>' : '') . '</div>
 					' . $player->getName() . '
 				</div>';
 				}
@@ -223,7 +223,24 @@ switch( $_GET["c"] ) {
 	case 8:
 
 		if( isset( $_GET["cid"] ) ) {
-			$user = $users->getUserByCharacterId( $_GET["cid"] );
+			if( intval( $_GET["cid"] ) == -1 ) {
+				if( isset( $_GET["gid"] ) && isset( $_GET["uid"] ) ) {
+					$game = $games->getGameById( $_GET["gid"] );
+					$user = $users->getUserById( $_GET["uid"] );
+					if( $game && $user && ($game->getMaster()->getUID() == LOGGEDIN || $user->getUID() == LOGGEDIN) ) {
+						echo '
+			<header><h1><span aria-hidden="true" class="icon-clipboard"></span> Neuer Character für ' . $user->getName() . ' in ' . $game->getName() . '</h1></header>
+			<article>';
+						echo '
+			</article>';
+					}
+				}
+			} else {
+				$user = $users->getUserByCharacterId( $_GET["cid"] );
+				if( $user ) {
+
+				}
+			}
 		}
 
 		break;

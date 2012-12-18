@@ -71,7 +71,7 @@ class users {
 	 * Get all user information by a character id
 	 *
 	 * @param int $cid Character id
-	 * @return array Array that includes all user information. Empty array if no user was found.
+	 * @return user Returns user object. False if no user was found.
 	 */
 	public function getUserByCharacterId( $cid ) {
 		foreach( $this->users as $user ) {
@@ -87,7 +87,7 @@ class users {
 			}*/
 		}
 
-		return array();
+		return false;
 	}
 
 	/**
