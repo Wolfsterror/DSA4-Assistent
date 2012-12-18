@@ -134,13 +134,45 @@ switch( $_GET["c"] ) {
 			</article>';
 		break;
 	case 6:
-		echo '
-			<header><h1><span aria-hidden="true" class="icon-book"></span>Gruppen</h1></header>
-			<article>
-				<br />
-				Text folgt
-				<br />
+		if( LOGGEDIN ) {
+			echo '
+			<header><h1><span aria-hidden="true" class="icon-book"></span> Gruppen</h1></header>
+			<article>';
+			if( isset( $_POST["newgame"] ) ) {
+				if( !empty( $_POST["gname"] ) ) {
+					$newgame = new game( -1, $_POST["gname"], "", $users->getUserById( LOGGEDIN ), array() );
+					$newgame->save( $mysql );
+					$games->addNewGame( $newgame );
+				}
+			}
+
+			$games = $games->getGamesByUID( LOGGEDIN );
+			if( count( $games ) <= 0 ) {
+				echo '
+				<strong>Du bist leider noch in gar keiner Gruppe.</strong><br />
+				Einladungen in eine Gruppe werden hier angezeigt und du kannst natürlich auch eigene erstellen.';
+			}
+			echo '<strong>Deine Gruppen</strong>';
+			foreach( $games as $g ) {
+				echo '
+				<div class="nicelist">
+					' . $g->getName() . '<br />
+					<small><strong>' . $g->getMaster()->getName() . '</strong>';
+				$usrlist = '';
+				foreach( $g->getUser() as $usr ) {
+					if( $usr != $g->getMaster() )
+						$usrlist .= ', ' . $usr->getName();
+				}
+				echo $usrlist . '</small>
+				</div>';
+			}
+			echo '
+				<hr />
+				<form action="index.php?c=6" method="post">
+					<strong>Neue Gruppe:</strong> <input type="text" name="gname" /> <input type="submit" name="newgame" value="Anlegen" />
+				</form>
 			</article>';
+		}
 		break;
 
 }

@@ -7,6 +7,7 @@ include 'inc.php';
 
 $mysql = new mysql();
 $users = new users( $mysql );
+$games = new games( $mysql, $users );
 
 include 'lib/login.php';
 

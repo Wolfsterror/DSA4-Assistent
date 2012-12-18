@@ -48,7 +48,7 @@ class game {
 	 * @return string Game name
 	 */
 	public function getName() {
-		return $this->gname();
+		return $this->gname;
 	}
 
 	/**

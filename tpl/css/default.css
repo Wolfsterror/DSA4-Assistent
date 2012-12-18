@@ -50,6 +50,11 @@ body > footer > a {
 	color: #5b3e14;
 }
 
+hr {
+	border: 0px;
+	border-bottom: 1px solid #b49b73;
+}
+
 /**
  * TYPOGRAPHIE
  */
@@ -161,4 +166,11 @@ body > footer {
 	padding-top: 5px;
 	padding-bottom: 5px;
 	height: 40px;
+}
+
+.nicelist {
+	padding: 10px;
+}
+.nicelist:nth-child(even) {
+	background-color: #d7c5a6;
 }
