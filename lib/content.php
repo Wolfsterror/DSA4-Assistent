@@ -8,24 +8,7 @@ if( !isset( $_GET["c"] ) ) {
 switch( $_GET["c"] ) {
 	
 	default:
-		$template->content = '
-			<header><h1><span aria-hidden="true" class="icon-home"></span> Startseite</h1></header>
-			<article>
-				<p>
-				Herzlich willkommen beim DSA4-Assistenten, <p>
-
-				Hast du schon immer ein Programm gesucht um schnell und einfach deine DSA4_Charaktere zu verwalten?<br />
-				Egal ob es sich um reine Chat RGP Chars handelt oder richtige Pen & Paper Chars, hier kriegst du eine<br />
-				ordentliche Basis um diese zu verwalten. Du kannst alle Werte Eintragen, eine Beschreibung hinzufügen,<br />
-				Dinge weglassen und vieles mehr.<p>
-
-				Der DSA4-Assistent wird ständig ausgebaut! Wir testen neue Funktionen und wollen<br />
-				euch mehr Komfort bieten.<p>
-
-				Die Idee, des DSA4-Assistent stammt von Wolfsterror.<br />
-				Das Projekt wird realisiert durch die hervorragende Hilfe von <a href="http://pakldev.de" target="_blank">PakL</a>!<br />
-
-			</article>';
+		$template->contentTemplate = 'homepage.tpl.php';
 		break;
 	case 1:
 		$template->content = '

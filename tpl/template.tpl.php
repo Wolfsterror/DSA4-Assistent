@@ -1,5 +1,5 @@
 <?php $this->display("header.html"); ?>
-<?php if(isset($this->contentTemplate)):
+<?php if(isset($this->contentTemplate) && $this->find("template", $this->contentTemplate)):
 	$this->display($this->contentTemplate);
 elseif(isset($this->content)):
 	print $this->content;
