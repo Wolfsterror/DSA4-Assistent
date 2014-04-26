@@ -95,15 +95,13 @@ class users {
 	 *
 	 * @param string $uname User name
 	 * @param string $password Password of the user
-	 * @param boolean $crypted Defines if password is already crypted
+	 * @param boolean $hash Given password is hash
 	 * @return int Returns an error code. Can be user::AUTH_SUCCESS, user::AUTH_PASSWORD_WRONG or user::AUTH_USER_UNKNOWN
 	 */
-	public function authUser( $uname, $password, $crypted = false ) {
+	public function authUser( $uname, $password, $hash = false ) {
 		$user = $this->getUserByName( $uname );
 		if( $user != null ) {
-			$pwd = $password;
-			if( !$crypted ) $pwd = crypt( $password, $uname );
-			if( $pwd == $user->getPassword() ) {
+			if(($hash && $password === $user->getPassword()) || password_verify($password, $user->getPassword())) {
 				return users::AUTH_SUCCESS;
 			} else {
 				return users::AUTH_PASSWORD_WRONG;
@@ -124,7 +122,7 @@ class users {
 		if( empty( $uname ) || empty( $password ) )
 			return false;
 		try {
-			$newuser = new user( $this, -1, $uname, "", crypt( $password, $uname ) );
+			$newuser = new user( $this, -1, $uname, "", password_hash($password, PASSWORD_DEFAULT) );
 			array_push( $this->users, $newuser );
 			return $newuser->save( $this->mysql );
 		} catch( Exception $e ) {

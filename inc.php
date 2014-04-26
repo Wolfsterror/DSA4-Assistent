@@ -14,6 +14,7 @@ $templateOptions = array(
 
 
 // Do not change anything after this comment
+require_once 'lib/password.php'; // ircmaxell's password_compat (https://github.com/ircmaxell/password_compat)
 require_once 'lib/mysql.php';
 require_once 'lib/Savant3.php';
 require_once 'obj/user.php';
