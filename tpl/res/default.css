@@ -9,13 +9,13 @@
 
 body {
 	background-color: #f3dfbc;
-	background-image: url( ../res/tex_body.png );
+	background-image: url( tex_body.png );
 	color: #5b3e14;
 }
 
 body > header {
 	background-color: #d1a679;
-	background-image: url( ../res/tex.png );
+	background-image: url( tex.png );
 }
 
 body > header > h2 {
@@ -50,7 +50,7 @@ body > section#content a:hover {
 
 body > footer {
 	background-color: #d1a679;
-	background-image: url( ../res/tex.png );
+	background-image: url( tex.png );
 	text-shadow: #FFFFFF 0px 0px 3px;
 }
 

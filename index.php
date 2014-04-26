@@ -9,11 +9,11 @@ $mysql = new mysql();
 $users = new users( $mysql );
 $games = new games( $mysql, $users );
 
+$template = new Savant3( $templateOptions ); // For setting template options please modify inc.php
+
 include 'lib/login.php';
-
-include 'tpl/header.html';
-
 include 'lib/content.php';
 
-$e = microtime( true );
-include 'tpl/footer.html';
+$template->s = $s;
+$template->pagetitle = $pagetitle;
+$template->display("template.tpl.php");

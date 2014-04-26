@@ -2,15 +2,15 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title><?php echo $pagetitle; ?></title>
+		<title><?php $this->eprint($this->pagetitle) ?></title>
 		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700,400italic,700italic" />
-		<link rel="stylesheet" type="text/css" href="tpl/css/icomoon.css" />
-		<link rel="stylesheet" type="text/css" href="tpl/css/default.css" />
+		<link rel="stylesheet" type="text/css" href="<?php $this->eprint("tpl/res/icomoon.css") ?>" />
+		<link rel="stylesheet" type="text/css" href="<?php $this->eprint("tpl/res/default.css") ?>" />
 		<!--[if lte IE 7]><script src="tpl/css/lte-ie7.js"></script><![endif]-->
 	</head>
 	<body>
 		<header>
-			<h2><?php echo $pagetitle; ?></h2>
+			<h2><?php $this->eprint($this->pagetitle) ?></h2>
 			<img src="tpl/res/logo.png" alt="" />
 		</header>
 		<nav>

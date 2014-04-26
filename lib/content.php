@@ -8,7 +8,7 @@ if( !isset( $_GET["c"] ) ) {
 switch( $_GET["c"] ) {
 	
 	default:
-		echo '
+		$template->content = '
 			<header><h1><span aria-hidden="true" class="icon-home"></span> Startseite</h1></header>
 			<article>
 				<p>
@@ -28,7 +28,7 @@ switch( $_GET["c"] ) {
 			</article>';
 		break;
 	case 1:
-		echo '
+		$template->content = '
 			<header><h1><span aria-hidden="true" class="icon-user"></span> User</h1></header>
 			<article>
 				<br />
@@ -42,7 +42,7 @@ switch( $_GET["c"] ) {
 			</article>';
 		break;
 	case 2:
-		echo '
+		$template->content = '
 			<header><h1><span aria-hidden="true" class="icon-clipboard"></span> Charaktere</h1></header>
 			<article>
 				<br />
@@ -64,31 +64,31 @@ switch( $_GET["c"] ) {
 				header( "Location: index.php?c=3&loggedout" );
 			}
 		} else {
-			echo '
+			$template->content = '
 			<header><h1><span aria-hidden="true" class="icon-enter"></span> Einloggen</h1></header>';
 			if( isset( $_GET["loggedout"] ) ) {
-				echo '
+				$template->content .= '
 			<strong style="color:green">Erfolgreich ausgeloggt.</strong>';
 			} else if( isset( $_GET["registered"] ) ) {
-				echo '
+				$template->content .= '
 			<strong style="color:green">Erfolgreich registriert. Du kannst dich nun einloggen.</strong>';
 			} else if( isset( $_POST["login_usr"] ) ) {
 				switch( LOGINERROR ) {
 					default:
-						echo '
+						$template->content .= '
 			<strong style="color:red">Einloggen fehlgeschlagen.</strong>';
 						break;
 					case users::AUTH_USER_UNKNOWN:
-						echo '
+						$template->content .= '
 			<strong style="color:red">Benutzer nicht gefunden.</strong>';
 						break;
 					case users::AUTH_PASSWORD_WRONG:
-						echo '
+						$template->content .= '
 			<strong style="color:red">Falsches Passwort.</strong>';
 						break;
 				}
 			}
-			echo '
+			$template->content .= '
 			<article>
 				<form action="index.php?c=3&login" method="post">
 					<table>
@@ -101,17 +101,17 @@ switch( $_GET["c"] ) {
 		}
 		break;
 	case 4:
-		echo '
+		$template->content .= '
 			<header><h1><span aria-hidden="true" class="icon-key"></span> Neuen Benutzer registrieren</h1></header>';
 		if( LOGGEDIN ) {
-			echo '<strong>Du bist hier falsch. Wenn du eigentlich nicht eingeloggt sein solltest, <a href="index.php?c=3">logge dich bitte sofort aus.</a></strong>';
+			$template->content .= '<strong>Du bist hier falsch. Wenn du eigentlich nicht eingeloggt sein solltest, <a href="index.php?c=3">logge dich bitte sofort aus.</a></strong>';
 		} else {
 			include 'lib/register.php';
 			if( defined( "REGISTER_ERROR" ) ) {
-				echo '
+				$template->content .= '
 			<strong style="color:red">' . REGISTER_ERROR . '</strong>';
 			}
-			echo '
+			$template->content .= '
 			<article>
 				<form action="index.php?c=4&register" method="post">
 					<table>
@@ -125,7 +125,7 @@ switch( $_GET["c"] ) {
 		}
 		break;
 	case 5:
-		echo '
+		$template->content .= '
 			<header><h1><span aria-hidden="true" class="icon-wrench"></span> Einstellungen</h1></header>
 			<article>
 				<br />
@@ -135,7 +135,7 @@ switch( $_GET["c"] ) {
 		break;
 	case 6:
 		if( LOGGEDIN ) {
-			echo '
+			$template->content .= '
 			<header><h1><span aria-hidden="true" class="icon-book"></span> Gruppen</h1></header>
 			<article>';
 			if( isset( $_POST["newgame"] ) ) {
@@ -148,12 +148,12 @@ switch( $_GET["c"] ) {
 
 			$games = $games->getGamesByUID( LOGGEDIN );
 			if( count( $games ) <= 0 ) {
-				echo '
+				$template->content .= '
 				<strong>Du bist leider noch in gar keiner Gruppe.</strong><br />
 				Einladungen in eine Gruppe werden hier angezeigt und du kannst natürlich auch eigene erstellen.';
 			}
 			foreach( $games as $g ) {
-				echo '
+				$template->content .= '
 				<div class="nicelist">
 					<a href="index.php?c=7&amp;gid=' . $g->getID() . '">' . $g->getName() . '</a><br />
 					<small><strong>' . $g->getMaster()->getName() . '</strong>';
@@ -162,10 +162,10 @@ switch( $_GET["c"] ) {
 					if( $usr != $g->getMaster() )
 						$usrlist .= ', ' . $usr->getName();
 				}
-				echo $usrlist . '</small>
+				$template->content .= $usrlist . '</small>
 				</div>';
 			}
-			echo '
+			$template->content .= '
 				<hr />
 				<form action="index.php?c=6" method="post">
 					<strong>Neue Gruppe:</strong> <input type="text" name="gname" /> <input type="submit" name="newgame" value="Anlegen" />
@@ -179,7 +179,7 @@ switch( $_GET["c"] ) {
 			$game = $games->getGameById( $_GET["gid"] );
 			if( $game ) {
 				$master = $game->getMaster();
-				echo '
+				$template->content .= '
 			<header><h1><span aria-hidden="true" class="icon-book"></span> Gruppe: ' . $game->getName() . '</h1></header>
 			<article>
 				<h3>Spielleiter</h3>
@@ -190,32 +190,32 @@ switch( $_GET["c"] ) {
 					$charid = -1;
 					if( count( $char ) > 0 )
 						$charid = $char[0]->getInfo( character::$infoid["ID"] );
-					echo '
+					$template->content .= '
 				<div class="nicelist">
 					<div class="options"><a href="index.php?c=8&amp;gid=' . $game->getID() . '&amp;uid=' . $player->getUID() . '&amp;cid=' . $charid . '">Charakter</a>' . (($master->getUID() == LOGGEDIN)? ' | <a href="">Spieler entfernen</a> | <a href="">Spielleiter ernennen</a>' : '') . '</div>
 					' . $player->getName() . '
 				</div>';
 				}
-				echo '
+				$template->content .= '
 				<h3>Notizen</h3>';
 				if( $master->getUID() == LOGGEDIN ) {
 					if( isset( $_POST["newnotes"] ) ) {
 						$game->setNotes( $_POST["newnotes"] );
 						$game->save( $mysql );
 					}
-					echo '
+					$template->content .= '
 				<form action="index.php?c=7&amp;gid=' . $game->getID() . '" method="post">
 					<textarea name="newnotes" style="width:100%;height:200px;resize:vertical;">' . htmlentities( $game->getNotes() ) . '</textarea><br />
 					<input type="submit" name="savenotes" value="Speichern" />
 				</form>';
 				} else {
-					echo str_replace( "\n", "<br />", htmlentities( $game->getNotes() ) );
+					$template->content .= str_replace( "\n", "<br />", htmlentities( $game->getNotes() ) );
 				}
-				echo '
+				$template->content .= '
 			</article>';
 			} else {
 				$err = str_replace( "{OBJECT}", "Gruppe", $notfound );
-				echo str_replace( "{REASON}", "", $err );
+				$template->content .= str_replace( "{REASON}", "", $err );
 			}
 		}
 
@@ -233,7 +233,7 @@ switch( $_GET["c"] ) {
 						foreach( $races as $k => $r ) {
 							$raceselect .= '<option value="' . $k . '">' . $r["name"] . '</option>';
 						}
-						echo '
+						$template->content = '
 			<header><h1><span aria-hidden="true" class="icon-clipboard"></span> Neuer Character für ' . $user->getName() . ' in ' . $game->getName() . '</h1></header>
 			<article>
 				<table style="width:100%">
