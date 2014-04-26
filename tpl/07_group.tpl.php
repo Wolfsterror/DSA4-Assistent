@@ -77,8 +77,27 @@
 							Noch ohne Charakter
 						<?php endif; ?>
 						</td>
+						<?php if($this->game->getMaster()->getUID() == LOGGEDIN): ?>
+						<td><a href="#">Spieler entfernen</a></td>
+						<?php endif; ?>
 					</tr>
 					<?php endforeach; ?>
+					<tr>
+						<td colspan="2">
+							<form action="index.php?c=6&amp;gid=<?php $this->eprint($this->game->getID()) ?>" method="post" role="form">
+								<div class="row">
+									<div class="col-lg-6">
+										<div class="input-group">
+											<input type="text" name="user" class="form-control" placeholder="Benutzername">
+											<span class="input-group-btn">
+												<button type="submit" name="inviteuser" class="btn btn-default" type="button">Spieler einladen</button>
+											</span>
+										</div>
+									</div>
+								</div>
+							</form>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>

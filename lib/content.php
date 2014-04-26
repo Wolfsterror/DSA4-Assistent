@@ -87,6 +87,10 @@ switch( $_GET["c"] ) {
 			} else {
 				$template->game = $games->getGameById($_GET["gid"]);
 
+				if(isset($_POST["inviteuser"])) {
+					$template->error = "Spielereinladungen sind noch nicht möglich.";
+				}
+
 				if( $template->game->getMaster()->getUID() == LOGGEDIN ) {
 					if( isset( $_POST["newnotes"] ) ) {
 						$template->game->setNotes($_POST["newnotes"]);
