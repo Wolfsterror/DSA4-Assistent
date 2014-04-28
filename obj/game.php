@@ -14,6 +14,7 @@ class game {
 	private $notes;
 	private $master;
 	private $user;
+	private $invites;
 
 	/**
 	 * Constructor of the game object.
@@ -25,12 +26,13 @@ class game {
 	 * @param array $user Array of users in the game
 	 * @return void
 	 */
-	public function __construct( $gid, $gname, $notes, $master, $user ) {
+	public function __construct( $gid, $gname, $notes, $master, $user, $invites ) {
 		$this->gid = $gid;
 		$this->gname = $gname;
 		$this->notes = $notes;
 		$this->master = $master;
 		$this->user = $user;
+		$this->invites = $invites;
 	}
 
 	/**
@@ -76,6 +78,15 @@ class game {
 	 */
 	public function getUser() {
 		return $this->user;
+	}
+
+	/**
+	 * Returns array of invites
+	 *
+	 * @return array Game invites
+	 */
+	public function getInvites() {
+		return $this->invites;
 	}
 
 	/**
@@ -133,6 +144,17 @@ class game {
 	}
 
 	/**
+	 * Invites a player to a game
+	 *
+	 * @param user $user User to invite
+	 * @return void
+	 */
+	public function invitePlayer( $user ) {
+		if( !in_array( $user, $this->invites ) )
+			array_push($this->invites, $user);
+	}
+
+	/**
 	 * Saves the game data in database
 	 *
 	 * @param mysql $mysql MySQL object to save to
@@ -158,7 +180,11 @@ class game {
 		$mysql->query( $delete );
 
 		foreach( $this->user as $usr ) {
-			$ins = "INSERT INTO `" . $mysql->prefix() . "game_users` ( `gid`, `uid` ) VALUES ( " . intval( $this->gid ) . ", " . intval( $usr->getUID() ) . " )";
+			$ins = "INSERT INTO `" . $mysql->prefix() . "game_users` ( `gid`, `uid`, `invite` ) VALUES ( " . intval( $this->gid ) . ", " . intval( $usr->getUID() ) . ", 0 )";
+			$mysql->query( $ins );
+		}
+		foreach( $this->invites as $usr ) {
+			$ins = "INSERT INTO `" . $mysql->prefix() . "game_users` ( `gid`, `uid`, `invite` ) VALUES ( " . intval( $this->gid ) . ", " . intval( $usr->getUID() ) . ", 1 )";
 			$mysql->query( $ins );
 		}
 	}

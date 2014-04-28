@@ -87,8 +87,13 @@ switch( $_GET["c"] ) {
 			} else {
 				$template->game = $games->getGameById($_GET["gid"]);
 
-				if(isset($_POST["inviteuser"])) {
-					$template->error = "Spielereinladungen sind noch nicht möglich.";
+				if(isset($_POST["inviteuser"]) && !empty($_POST["inviteuser"])) {
+					$u = $users->getUserByName($_POST["inviteuser"]);
+					if($u != null) {
+						$template->game->invitePlayer($u);
+						$template->game->save($mysql);
+						$template->success = "Spieler '" . $u->getName() . "' in Gruppe eingeladen.";
+					} else $template->error = "Spieler mit dem Namen '" . $_POST["inviteuser"] . "' nicht gefunden.";
 				}
 
 				if( $template->game->getMaster()->getUID() == LOGGEDIN ) {

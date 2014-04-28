@@ -24,8 +24,12 @@ class games {
 		foreach( $res as $row ) {
 			$usrs = $mysql->query( "SELECT * FROM `" . $mysql->prefix() . "game_users` WHERE `gid` = " . intval( $row["gid"] ), true );
 			$uarr = array();
+			$uinv = array();
 			foreach( $usrs as $u ) {
-				array_push( $uarr, $users->getUserById( intval( $u["uid"] ) ) );
+				if(intval($u["invite"]) != 1)
+					array_push( $uarr, $users->getUserById( intval( $u["uid"] ) ) );
+				else
+					array_push( $uinv, $users->getUserById( intval( $u["uid"] ) ) );
 			}
 
 			$game = new game(
@@ -33,7 +37,8 @@ class games {
 								$row["gname"],
 								$row["notes"],
 								$users->getUserById( intval( $row["master"] ) ),
-								$uarr
+								$uarr,
+								$uinv
 							);
 
 			array_push( $this->games, $game );

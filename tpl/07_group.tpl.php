@@ -43,6 +43,7 @@
 		</form>
 	<?php elseif(isset($this->game)): ?>
 		<header class="page-header"><h1><span class="glyphicon glyphicon-th-large"></span> <?php $this->eprint($this->game->getName()) ?> <small>Gruppe</small></h1></header>
+		<?php if(isset($this->success)): ?><div class="alert alert-success"><?php $this->eprint($this->success) ?></div><?php endif; ?>
 		<?php if(isset($this->error)): ?><div class="alert alert-danger"><?php $this->eprint($this->error) ?></div><?php endif; ?>
 
 		<div class="panel panel-default">
@@ -82,15 +83,24 @@
 						<?php endif; ?>
 					</tr>
 					<?php endforeach; ?>
+					<?php foreach($this->game->getInvites() as $player): ?>
 					<tr>
-						<td colspan="2">
+						<td>Eingeladen: <?php $this->eprint($player->getName()) ?></td>
+						<td></td>
+						<?php if($this->game->getMaster()->getUID() == LOGGEDIN): ?>
+						<td><a href="#">Einladung zurückziehen</a></td>
+						<?php endif; ?>
+					</tr>
+					<?php endforeach; ?>
+					<tr>
+						<td colspan="<?php $this->eprint($this->game->getMaster()->getUID() == LOGGEDIN ? '3' : '2') ?>">
 							<form action="index.php?c=6&amp;gid=<?php $this->eprint($this->game->getID()) ?>" method="post" role="form">
 								<div class="row">
 									<div class="col-lg-6">
 										<div class="input-group">
-											<input type="text" name="user" class="form-control" placeholder="Benutzername">
+											<input type="text" name="inviteuser" class="form-control" placeholder="Benutzername">
 											<span class="input-group-btn">
-												<button type="submit" name="inviteuser" class="btn btn-default" type="button">Spieler einladen</button>
+												<button type="submit" class="btn btn-default" type="button">Spieler einladen</button>
 											</span>
 										</div>
 									</div>

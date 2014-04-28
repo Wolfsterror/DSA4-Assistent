@@ -111,6 +111,27 @@ class user {
 	}
 
 	/**
+	 * Get game invitations for this user
+	 *
+	 * @param int $gid Game id as a filter. If -1, no filter is used.
+	 * @param games $games games object, if null the returned array only contains game ids
+	 * @return array Array with games the player was invited to
+	 */
+	public function getInvitations( $gid = -1, $games = null ) {
+		if( $this->uid == -1 || !is_int($gid) )
+			return array();
+
+		$result = $this->users->mysql->query("SELECT * FROM `" . $this->users->mysql->prefix() . "game_users` WHERE `uid` = " . $this->uid . ( ($gid > 0) ? " AND `gid` = " . $gid : "" ) );
+		$invitations = array();
+		foreach($result as $row) {
+			if($games != null) array_push($invitations, $row["gid"]);
+			else array_push($invitations, $games->getGameById($row["gid"]));
+		}
+
+		return $invitations;
+	}
+
+	/**
 	 * Get characters of that user by game id
 	 *
 	 * @param int $gid Game id as a filter. If -1, no filter is used.
