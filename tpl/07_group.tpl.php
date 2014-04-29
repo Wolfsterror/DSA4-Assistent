@@ -1,6 +1,7 @@
 <?php if(LOGGEDIN): ?>
 	<?php if(isset($this->games)): ?>
 		<header class="page-header"><h1><span class="glyphicon glyphicon-th-large"></span> Gruppen</h1></header>
+		<?php if(isset($this->success)): ?><div class="alert alert-success"><?php $this->eprint($this->success) ?></div><?php endif; ?>
 		<?php if(isset($this->error)): ?><div class="alert alert-danger"><?php $this->eprint($this->error) ?></div><?php endif; ?>
 
 		<?php if(count($this->games) <= 0): ?>
@@ -15,6 +16,7 @@
 						<th>Gruppenname</th>
 						<th>Spielleiter</th>
 						<th>Mitspieler</th>
+						<th>Optionen</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -23,11 +25,22 @@
 						<td><a href="index.php?c=6&amp;gid=<?php $this->eprint($game->getID()) ?>"><?php $this->eprint($game->getName()) ?></a></td>
 						<td><?php $this->eprint($game->getMaster()->getName()) ?></td>
 						<td><?php foreach($game->getUser() as $i => $usr): if($usr != $game->getMaster()): if($i>0): ?>, <?php endif; $this->eprint($usr->getName()); endif; endforeach; ?></td>
+						<td><?php if($game->getMaster()->getUID() != LOGGEDIN): ?><a href="index.php?c=6&amp;decl=<?php $this->eprint($game->getId()) ?>&amp;left=true" onclick="return confirm('Willst du diese Gruppe wirklich verlassen?');">Gruppe verlassen</a><?php endif; ?></td>
 					</tr>
 				<?php endforeach; ?>
 				</tbody>
 			</table>
 		<?php endif; ?>
+
+		<?php foreach($this->invitations as $inv): ?>
+			<div class="alert alert-success">
+				Du wurdest in eine Gruppe eingeladen: <strong><?php $this->eprint($inv->getName()) ?></strong>.<br>
+				<div class="btn-group">
+					<a role="button" class="btn btn-sm btn-success" href="index.php?c=6&amp;join=<?php $this->eprint($inv->getId()) ?>">Gruppe beitreten</a>
+					<a role="button" class="btn btn-sm btn-danger" href="index.php?c=6&amp;decl=<?php $this->eprint($inv->getId()) ?>">Einladung ablehnen</a>
+				</div>
+			</div>
+		<?php endforeach; ?>
 
 		<form action="index.php?c=6" method="post" class="form-inline" role="form">
 			<div class="row">
@@ -72,7 +85,7 @@
 							if($char != null):
 						?>
 							<a href="index.php?c=8&amp;cid=<?php $this->eprint($char->getInfo(character::$infoid["ID"])) ?>">Charakter <?php $this->eprint(($player->getID() == LOGGEDIN) ? 'anzeigen' : 'bearbeiten') ?></a>
-						<?php elseif($player->getID() == LOGGEDIN): ?>
+						<?php elseif($player->getUID() == LOGGEDIN): ?>
 							<a href="index.php?c=8&amp;gid=<?php $this->eprint($this->game->getID()) ?>">Charakter erstellen</a>
 						<?php else: ?>
 							Noch ohne Charakter

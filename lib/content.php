@@ -81,9 +81,24 @@ switch( $_GET["c"] ) {
 						$games->addNewGame( $newgame );
 					}
 				}
+				if(isset($_GET["join"]) && is_numeric($_GET["join"])) {
+					$g = $games->getGameById(intval($_GET["join"]));
+					$g->addUser($users->getUserById(LOGGEDIN));
+					$g->save($mysql);
+					$template->success = "Gruppe beigetreten";
+				}
+				if(isset($_GET["decl"]) && is_numeric($_GET["decl"])) {
+					$g = $games->getGameById(intval($_GET["decl"]));
+					$g->removeUser($users->getUserById(LOGGEDIN));
+					$g->save($mysql);
+					if(isset($_GET["left"])) $template->error = "Gruppe verlassen";
+				}
 
-				$games = $games->getGamesByUID( LOGGEDIN );
-				$template->games = $games;
+				$gams = $games->getGamesByUID( LOGGEDIN );
+				$u = $users->getUserById( LOGGEDIN );
+				$template->invitations = array();
+				if($u != null) $template->invitations = $u->getInvitations(-1, $games);
+				$template->games = $gams;
 			} else {
 				$template->game = $games->getGameById($_GET["gid"]);
 

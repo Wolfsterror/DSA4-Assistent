@@ -121,10 +121,10 @@ class user {
 		if( $this->uid == -1 || !is_int($gid) )
 			return array();
 
-		$result = $this->users->mysql->query("SELECT * FROM `" . $this->users->mysql->prefix() . "game_users` WHERE `uid` = " . $this->uid . ( ($gid > 0) ? " AND `gid` = " . $gid : "" ) );
+		$result = $this->users->mysql->query("SELECT * FROM `" . $this->users->mysql->prefix() . "game_users` WHERE `invite` = 1 AND `uid` = " . $this->uid . ( ($gid > 0) ? " AND `gid` = " . $gid : "" ), true );
 		$invitations = array();
 		foreach($result as $row) {
-			if($games != null) array_push($invitations, $row["gid"]);
+			if($games == null) array_push($invitations, $row["gid"]);
 			else array_push($invitations, $games->getGameById($row["gid"]));
 		}
 

@@ -127,9 +127,10 @@ class game {
 	 */
 	public function removeUser( $user ) {
 		$s = array_search( $user, $this->user, true );
-		if( $s ) {
-			unset( $this->user[$s] );
-		}
+		if( $s !== false ) unset( $this->user[$s] );
+
+		$s = array_search( $user, $this->invites, true );
+		if( $s !== false ) unset( $this->invites[$s] );
 	}
 
 	/**
@@ -141,6 +142,11 @@ class game {
 	public function addUser( $user ) {
 		if( !in_array( $user, $this->user ) )
 			$this->user[] = $user;
+
+		if( in_array( $user, $this->invites ) ) {
+			$s = array_search($user, $this->invites, true);
+			if($s !== false) unset($this->invites[$s]);
+		}
 	}
 
 	/**
