@@ -14,6 +14,8 @@
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
 		<link rel="stylesheet" type="text/css" href="tpl/res/default.css">
+
+		<link rel="stylesheet" type="text/css" href="tpl/res/icomoon.css">
 	</head>
 	<body>
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -29,20 +31,21 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
 					<?php if(!isset($this->activePage)) $this->activePage = 0; ?>
 					<ul class="nav navbar-nav">
-						<li <?php if($this->activePage==0): ?>class="active"<?php endif; ?>><a href="index.php?c=0"><span class="glyphicon glyphicon-home"></span> Start</a></li>
-						<li <?php if($this->activePage==1): ?>class="active"<?php endif; ?>><a href="index.php?c=1"><span class="glyphicon glyphicon-user"></span> Benutzer</a></li>
-						<li <?php if($this->activePage==2): ?>class="active"<?php endif; ?>><a href="index.php?c=2"><span class="glyphicon glyphicon-tower"></span> Charaktere</a></li>
+						<li <?php if($this->activePage==0): ?>class="active"<?php endif; ?>><a href="index.php?c=0"><span class="icon-home"></span> Start</a></li>
+						<li <?php if($this->activePage==1): ?>class="active"<?php endif; ?>><a href="index.php?c=1"><span class="icon-user"></span> Benutzer</a></li>
+						<li <?php if($this->activePage==2): ?>class="active"<?php endif; ?>><a href="index.php?c=2"><span class="icon-rock"></span> Charaktere</a></li>
 						<?php if( LOGGEDIN ): ?>
-						<li <?php if($this->activePage==6): ?>class="active"<?php endif; ?>><a href="index.php?c=6"><span class="glyphicon glyphicon-th-large"></span> Gruppen</a>
+						<li <?php if($this->activePage==6): ?>class="active"<?php endif; ?>><a href="index.php?c=6"><span class="icon-users"></span> Gruppen</a>
 						<?php endif; ?>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 					<?php if( LOGGEDIN ): ?>
-						<li <?php if($this->activePage==5): ?>class="active"<?php endif; ?>><a href="index.php?c=5"><span class="glyphicon glyphicon-wrench"></span> Einstellungen</a></li>
-						<li <?php if($this->activePage==3): ?>class="active"<?php endif; ?>><a href="index.php?c=3"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+						<li><a id="opendicecup"><span class="icon-dice"></span> Würfelbecher</a></li>
+						<li <?php if($this->activePage==5): ?>class="active"<?php endif; ?>><a href="index.php?c=5"><span class="icon-wrench"></span> Einstellungen</a></li>
+						<li <?php if($this->activePage==3): ?>class="active"<?php endif; ?>><a href="index.php?c=3"><span class="icon-exit"></span> Logout</a>
 					<?php else: ?>
-						<li <?php if($this->activePage==4): ?>class="active"<?php endif; ?>><a href="index.php?c=4"><span class="glyphicon glyphicon-pencil"></span> Registrieren</a>
-						<li <?php if($this->activePage==3): ?>class="active"<?php endif; ?>><a href="index.php?c=3"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+						<li <?php if($this->activePage==4): ?>class="active"<?php endif; ?>><a href="index.php?c=4"><span class="icon-wand"></span> Registrieren</a>
+						<li <?php if($this->activePage==3): ?>class="active"<?php endif; ?>><a href="index.php?c=3"><span class="icon-enter"></span> Login</a>
 					<?php endif; ?></li>
 					</ul>
 				</div>

@@ -1,4 +1,4 @@
-<header class="page-header"><h1><span class="glyphicon glyphicon-user"></span> Benutzer</h1></header>
+<header class="page-header"><h1><span class="icon-user"></span> Benutzer</h1></header>
 <article>
 	<p>Hallo Reisender,</p>
 	<p>hier würdest du deine Benutzerverwaltung finden. Wobei wir uns noch nicht sicher damit sind.

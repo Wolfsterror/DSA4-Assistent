@@ -1,6 +1,6 @@
 <?php if(LOGGEDIN): ?>
 	<?php if(isset($this->games)): ?>
-		<header class="page-header"><h1><span class="glyphicon glyphicon-th-large"></span> Gruppen</h1></header>
+		<header class="page-header"><h1><span class="icon-users"></span> Gruppen</h1></header>
 		<?php if(isset($this->success)): ?><div class="alert alert-success"><?php $this->eprint($this->success) ?></div><?php endif; ?>
 		<?php if(isset($this->error)): ?><div class="alert alert-danger"><?php $this->eprint($this->error) ?></div><?php endif; ?>
 
@@ -55,7 +55,7 @@
 			</div>
 		</form>
 	<?php elseif(isset($this->game)): ?>
-		<header class="page-header"><h1><span class="glyphicon glyphicon-th-large"></span> <?php $this->eprint($this->game->getName()) ?> <small>Gruppe</small></h1></header>
+		<header class="page-header"><h1><span class="icon-users"></span> <?php $this->eprint($this->game->getName()) ?> <small>Gruppe</small></h1></header>
 		<?php if(isset($this->success)): ?><div class="alert alert-success"><?php $this->eprint($this->success) ?></div><?php endif; ?>
 		<?php if(isset($this->error)): ?><div class="alert alert-danger"><?php $this->eprint($this->error) ?></div><?php endif; ?>
 

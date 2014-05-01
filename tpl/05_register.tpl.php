@@ -1,4 +1,4 @@
-<header class="page-header"><h1><span class="glyphicon glyphicon-pencil"></span> Neuen Benutzer registrieren</h1></header>
+<header class="page-header"><h1><span class="icon-wand"></span> Neuen Benutzer registrieren</h1></header>
 
 <?php if(isset($this->error)): ?><div class="alert alert-danger"><?php $this->eprint($this->error) ?></div><?php endif; ?>
 <form action="index.php?c=4&amp;register" method="post" class="form-horizontal" role="form">
@@ -25,7 +25,7 @@
 	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-3 col-sm-9">
-			<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Registrieren</button>
+			<button type="submit" class="btn btn-default"><span class="icon-wand"></span> Registrieren</button>
 		</div>
 	</div>
 </form>
