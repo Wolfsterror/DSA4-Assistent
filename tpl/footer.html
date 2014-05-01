@@ -5,5 +5,30 @@
 				Made with <a href="http://getbootstrap.com/">Bootstrap</a> | Die Abfrage dauerte <?php echo round((microtime( true )-$this->s), 3 ); ?> Sekunden.
 			</div>
 		</footer>
+
+		<div class="modal fade" id="dicecup">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title"><span class="icon-dice"></span> Würfelbecher</h4>
+					</div>
+					<div class="modal-body">
+						<output id="diceoutput" class="well"></output>
+						<button type="button" class="btn btn-default adddice">W3</button>
+						<button type="button" class="btn btn-default adddice">W4</button>
+						<button type="button" class="btn btn-default adddice">W6</button>
+						<button type="button" class="btn btn-default adddice">W10</button>
+						<button type="button" class="btn btn-default adddice">W12</button>
+						<button type="button" class="btn btn-default adddice">W20</button>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="rolldice">Würfeln</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 	</body>
 </html>
